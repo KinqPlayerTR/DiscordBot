@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const bot = new Discord.Client();
 const ayarlar = require('./ayarlar.json');
 const chalk = require('chalk');
 const fs = require('fs');
@@ -11,6 +12,26 @@ var prefix = ayarlar.prefix;
 const log = message => {
   console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
 };
+
+client.on("ready", () => {
+  client.user.setGame(prefix + "yardım | Güncellemelerden Bot Bazen Çevirim Dışı Ola Bilir! | ClawBot.tk") 
+  console.log("Bağlandım!")   
+});
+
+bot.on('guildMemberAdd', member => {
+  const channel = member.guild.channels.find('name', 'hosgeldiniz-log');
+  if (!channel) return;
+  if(!channel) return message.channel.send(" `hosgeldiniz-log` İsminde Yazı Kanalı Bulamıyorum.!");
+  
+  channel.send(`Sunucuya hoşgeldiniz, ${member}`);
+  const sunucubilgi = new Discord.RichEmbed()
+  .setAuthor(`Aramıza Hoşgeldin ${member}`)
+  .setColor(3447003)
+  .setTimestamp()
+  .setDescription('')
+  .setImage(`http://clawbot.tk/img/hg.png`)
+  return message.channel.sendEmbed(sunucubilgi);
+});
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
@@ -79,8 +100,8 @@ client.unload = command => {
 };
 
 client.on('message', msg => {
-  if (msg.content.toLowerCase() === 'sa') {
-    msg.reply('Aleyküm selam,  hoş geldin ^^');
+  if (msg.content.toLowerCase() === '') {
+    msg.channel.send('');
   }
 });
 
