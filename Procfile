@@ -1,1 +1,1 @@
-worker: node bot - kopya.js
+worker: node bot-kopya.js
